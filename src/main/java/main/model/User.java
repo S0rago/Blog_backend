@@ -3,6 +3,7 @@ package main.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -29,7 +30,12 @@ public class User {
     private String password;
 
     private String code;
+
+    @Column(columnDefinition = "TEXT")
     private String photo;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     public int getId() {
         return id;
@@ -93,5 +99,13 @@ public class User {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

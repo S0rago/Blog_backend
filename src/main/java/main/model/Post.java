@@ -3,6 +3,7 @@ package main.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -17,14 +18,17 @@ public class Post {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "moderation_status", columnDefinition = "enum(\"NEW\",\"ACCEPTED\",\"DECLINED\")")
     private ModStatus modStatus;
 
-    @Column(name = "moderator_id")
-    private int modId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "moderator_id")
+    private User mod;
 
     @NotNull
-    @Column(name = "user_id")
-    private int userId;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @NotNull
     private Timestamp time;
@@ -33,10 +37,18 @@ public class Post {
     private String title;
 
     @NotNull
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @NotNull
+    @Column(name = "view_count")
     private int viewCount;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tag2post",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")})
+    private List<Tag> tags;
 
     public int getId() {
         return id;
@@ -62,20 +74,20 @@ public class Post {
         this.modStatus = modStatus;
     }
 
-    public int getModId() {
-        return modId;
+    public User getMod() {
+        return mod;
     }
 
-    public void setModId(int modId) {
-        this.modId = modId;
+    public void setMod(User mod) {
+        this.mod = mod;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Timestamp getTime() {
@@ -108,5 +120,13 @@ public class Post {
 
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }

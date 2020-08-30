@@ -11,15 +11,18 @@ public class PostComment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "parent_id")
-    private int parentId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parent_id")
+    private PostComment parent;
 
     @NotNull
-    @Column(name = "post_id")
-    private int postId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @NotNull
-    @Column(name = "user_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private int userId;
 
     @NotNull
@@ -36,20 +39,20 @@ public class PostComment {
         this.id = id;
     }
 
-    public int getParentId() {
-        return parentId;
+    public PostComment getParent() {
+        return parent;
     }
 
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
+    public void setParentId(PostComment parent) {
+        this.parent = parent;
     }
 
-    public int getPostId() {
-        return postId;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPostId(Post post) {
+        this.post = post;
     }
 
     public int getUserId() {
