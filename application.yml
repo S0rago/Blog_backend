@@ -1,0 +1,5 @@
+spring.datasource.url: jdbc:mysql://localhost:3306/blogBackend?serverTimezone=UTC
+spring.datasource.username: root
+spring.datasource.password: 2f1720dbd0e1abfa
+spring.jackson.default-property-inclusion: non_null
+spring.jpa.hibernate.ddl-auto: update
