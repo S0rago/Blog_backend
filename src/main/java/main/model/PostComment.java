@@ -2,7 +2,7 @@ package main.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "post_comments")
@@ -23,13 +23,15 @@ public class PostComment {
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private int userId;
+    private User user;
 
     @NotNull
-    private Timestamp time;
+    private LocalDateTime time;
 
     @NotNull
     private String text;
+
+    public PostComment() {}
 
     public int getId() {
         return id;
@@ -55,19 +57,19 @@ public class PostComment {
         this.post = post;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Timestamp getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

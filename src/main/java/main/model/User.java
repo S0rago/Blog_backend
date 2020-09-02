@@ -2,7 +2,7 @@ package main.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,7 +18,7 @@ public class User {
 
     @NotNull
     @Column(name = "reg_time")
-    private Timestamp regTime;
+    private LocalDateTime regTime;
 
     @NotNull
     private String name;
@@ -37,6 +37,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
+    public User() {}
+
     public int getId() {
         return id;
     }
@@ -53,11 +55,11 @@ public class User {
         isModerator = moderator;
     }
 
-    public Timestamp getRegTime() {
+    public LocalDateTime getRegTime() {
         return regTime;
     }
 
-    public void setRegTime(Timestamp regTime) {
+    public void setRegTime(LocalDateTime regTime) {
         this.regTime = regTime;
     }
 

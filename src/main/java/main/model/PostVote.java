@@ -2,7 +2,7 @@ package main.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "post_votes")
@@ -22,11 +22,13 @@ public class PostVote {
     private Post post;
 
     @NotNull
-    private Timestamp time;
+    private LocalDateTime time;
 
     @NotNull
     @Column(columnDefinition = "TINYINT")
     private boolean value;
+
+    public PostVote() {}
 
     public int getId() {
         return id;
@@ -52,11 +54,11 @@ public class PostVote {
         this.post = post;
     }
 
-    public Timestamp getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

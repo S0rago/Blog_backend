@@ -20,6 +20,12 @@ public class Tag {
             inverseJoinColumns = {@JoinColumn(name = "post_id")})
     private List<Post> posts;
 
+    public Tag() {}
+
+    public Tag(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

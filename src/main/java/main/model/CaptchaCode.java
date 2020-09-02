@@ -2,7 +2,7 @@ package main.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "captcha_codes")
@@ -12,7 +12,7 @@ public class CaptchaCode {
     private int id;
 
     @NotNull
-    private Timestamp time;
+    private LocalDateTime time;
 
     @NotNull
     @Column(columnDefinition = "TINYTEXT")
@@ -22,6 +22,8 @@ public class CaptchaCode {
     @Column(columnDefinition = "TINYTEXT")
     private String secretCode;
 
+    public CaptchaCode() {}
+
     public int getId() {
         return id;
     }
@@ -30,11 +32,11 @@ public class CaptchaCode {
         this.id = id;
     }
 
-    public Timestamp getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

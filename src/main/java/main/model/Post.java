@@ -1,8 +1,13 @@
 package main.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import main.TimestampDeserializer;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -31,7 +36,9 @@ public class Post {
     private User user;
 
     @NotNull
-    private Timestamp time;
+    @JsonProperty("timestamp")
+    @JsonDeserialize(using = TimestampDeserializer.class)
+    private LocalDateTime time;
 
     @NotNull
     private String title;
@@ -49,6 +56,14 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private List<Tag> tags;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostVote> votes;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostComment> comments;
+
+    public Post() {}
 
     public int getId() {
         return id;
@@ -90,11 +105,11 @@ public class Post {
         this.user = user;
     }
 
-    public Timestamp getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
@@ -128,5 +143,21 @@ public class Post {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public List<PostVote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<PostVote> votes) {
+        this.votes = votes;
+    }
+
+    public List<PostComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<PostComment> comments) {
+        this.comments = comments;
     }
 }
