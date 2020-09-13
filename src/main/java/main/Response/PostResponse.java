@@ -2,14 +2,16 @@ package main.Response;
 
 import main.model.ModStatus;
 import main.model.Post;
+import main.model.PostComment;
 import main.model.User;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PostResponse extends AbstractResponse {
+public class PostResponse implements Serializable {
     private Boolean responseStatus;
     private Set<String> errors;
 
@@ -17,7 +19,7 @@ public class PostResponse extends AbstractResponse {
     private List<Post> posts;
 
     private Integer id;
-    private Integer isActive;
+    private Boolean isActive;
     private ModStatus modStatus;
     private User mod;
     private User user;
@@ -25,6 +27,8 @@ public class PostResponse extends AbstractResponse {
     private String title;
     private String text;
     private Integer viewCount;
+    private List<PostComment> comments;
+    private Integer commentCount;
 
     public PostResponse() {
 
@@ -77,11 +81,11 @@ public class PostResponse extends AbstractResponse {
         this.id = id;
     }
 
-    public Integer getIsActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(Integer isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
@@ -139,5 +143,21 @@ public class PostResponse extends AbstractResponse {
 
     public void setViewCount(Integer viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public List<PostComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<PostComment> comments) {
+        this.comments = comments;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 }

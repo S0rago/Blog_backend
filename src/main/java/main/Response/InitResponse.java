@@ -1,6 +1,8 @@
 package main.Response;
 
-public class InitResponse extends AbstractResponse {
+import java.io.Serializable;
+
+public class InitResponse implements Serializable {
     private String title;
     private String subtitle;
     private String phone;

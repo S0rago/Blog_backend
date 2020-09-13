@@ -1,18 +1,13 @@
 package main.controller;
 
-import main.model.ModStatus;
+import main.Response.PostResponse;
 import main.model.Post;
 import main.service.ApiPostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-
-import static org.springframework.format.annotation.DateTimeFormat.*;
 
 @Controller
 @RequestMapping("/api/post")
@@ -22,60 +17,52 @@ public class ApiPostController {
     ApiPostService aps;
 
     @GetMapping(value = "")
-    ResponseEntity getPosts(@RequestParam int offset, @RequestParam int limit, @RequestParam String mode) {
-            return new ResponseEntity(aps.getMainPosts(offset, limit, mode), HttpStatus.OK);
-        //TODO
+    ResponseEntity<PostResponse> getPosts(@RequestParam int offset, @RequestParam int limit, @RequestParam String mode) {
+        return new ResponseEntity<>(aps.getMainPosts(offset, limit, mode), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")
-    ResponseEntity getPostSearch(@RequestParam int offset, @RequestParam int limit, @RequestParam String query) {
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-        //TODO
+    ResponseEntity<PostResponse> getPostSearch(@RequestParam int offset, @RequestParam int limit, @RequestParam String query) {
+        return new ResponseEntity<>(aps.getSearchPosts(offset, limit, query), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byDate")
-    ResponseEntity getPostByDate(@RequestParam int offset, @RequestParam int limit, @RequestParam @DateTimeFormat(iso = ISO.DATE) Date date) {
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-        //TODO
+    ResponseEntity<PostResponse> getPostByDate(@RequestParam int offset, @RequestParam int limit, @RequestParam String date) {
+        return new ResponseEntity<>(aps.getPostsByDate(offset, limit, date), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byTag")
-    ResponseEntity getPostByTag(@RequestParam int offset, @RequestParam int limit, @RequestParam String tag) {
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-        //TODO
+    ResponseEntity<PostResponse> getPostByTag(@RequestParam int offset, @RequestParam int limit, @RequestParam String tag) {
+        return new ResponseEntity<>(aps.getPostsByTag(offset, limit, tag), HttpStatus.OK);
     }
 
     @GetMapping(value = "/moderation")
-    ResponseEntity getPostToMod(@RequestParam int offset, @RequestParam int limit, @RequestParam String modStatus) {
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-        //TODO
+    ResponseEntity<PostResponse> getPostsToMod(@RequestParam int offset, @RequestParam int limit, @RequestParam String modStatus) {
+        return new ResponseEntity<>(aps.getPostsToMod(offset, limit, modStatus), HttpStatus.OK);
     }
 
     @GetMapping(value = "/my")
-    ResponseEntity getMyPost(@RequestParam int offset, @RequestParam int limit, @RequestParam boolean isActive, @RequestParam ModStatus modStatus) {
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-        //TODO
+    ResponseEntity<PostResponse> getMyPost(@RequestParam int offset, @RequestParam int limit, @RequestParam String status) {
+        return new ResponseEntity<>(aps.getMyPosts(offset, limit, status), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{ID}")
-    ResponseEntity getPostById(@PathVariable int id) {
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-        //TODO
+    ResponseEntity<PostResponse> getPostById(@PathVariable int id) {
+        return new ResponseEntity<>(aps.getPostById(id),  HttpStatus.OK);
     }
 
     @PostMapping(value = "")
-    ResponseEntity addPost(@RequestBody Post post) {
+    ResponseEntity<PostResponse> addPost(@RequestBody Post post) {
         return new ResponseEntity<>(aps.saveNewPost(post), HttpStatus.OK);
     }
 
     @PostMapping(value = "/like")
-    ResponseEntity postLike() {
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-        //TODO
+    ResponseEntity<PostResponse> postLike(@RequestBody int postId) {
+        return new ResponseEntity<>(aps.votePost(postId, true), HttpStatus.OK);
     }
 
     @PostMapping(value = "/dislike")
-    ResponseEntity postDislike() {
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+    ResponseEntity<PostResponse> postDislike(@RequestBody int postId) {
+        return new ResponseEntity<>(aps.votePost(postId, false), HttpStatus.OK);
     }
 }
