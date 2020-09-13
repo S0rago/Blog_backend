@@ -1,5 +1,7 @@
 package main.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -26,6 +28,7 @@ public class PostVote {
 
     @NotNull
     @Column(columnDefinition = "TINYINT")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean value;
 
     public PostVote() {}
@@ -62,7 +65,7 @@ public class PostVote {
         this.time = time;
     }
 
-    public boolean isValue() {
+    public boolean getValue() {
         return value;
     }
 
